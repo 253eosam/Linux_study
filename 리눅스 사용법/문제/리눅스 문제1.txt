@@ -1,0 +1,54 @@
+
+1. 시작은 루트홈폴더에서 시작 :경로 /root
+
+   상대경로를 이용해서 tmp 디렉토리로 이동 
+
+   절대경로를 이용하여 etc안에 sysconfig 디렉토리로 이동
+
+   현재 있는 위치에서 상위디렉토리로 이동
+
+   상대경로를 이용하여 var 디렉토리안에 log 디렉토리로 이동
+
+   현재 위치는 ? 
+
+
+2. 루트 홈디렉토리로 이동 ( 아래의 문제는 상대 경로를 이용하여 하세요)
+
+   /var/log/secure 라는 파일을 /tmp 폴더에 secure명으로 복사
+
+   /etc/passwd 파일을 /root 폴더에 passwd_bak 이라는 파일명으로 복사
+
+   /etc/sysconfig/iptables 파일을 /home/iptables_bak 변경 복사
+
+3.루트 홈디렉토리로 이동 ( 아래의 문제는 상대 경로를 이용하여 하세요)
+   /etc/rc.d/init.d 상대경로를 이용하여 이동 
+   /etc/securetty 파일을 /var/www/html/ 디렉토리로 이동
+   /etc/rc.d 상대경로를 이용하여 이동 
+   /etc/services 파일을 /var/www/html/ 디렉토리로 이동
+   /etc/passwd 파일을 모니터에 출력
+   /usr/share/zoneinfo/US 상대경로를 이용하여 이동 
+   /var/log/secure 파일을 모니터에 출력
+   /usr/share/games 상대경로를 이용하여 이동 
+   /etc/sysconfig/iptables 파일을 모니터에 출력 
+   /tmp 디렉토리에 파일명이 monkey라는 파일을 만들고 파일내용에 hihi 을 입력
+   /root 디렉토리에 korea.txt 라는 파일을 만들고 파일 내용에 hello korea 을 입력
+   /var/www/html 디렉토리에 index.html 이라는 파일을 만들고 hacker 을 입력
+   /tmp 디렉토리에 hacker 파일을 생성
+   /usr/local/etc 상대경로를 이용하여 이동 
+   /etc/passwd 파일 내용을 모니터에 출력하지 않고 /tmp/hacker 파일에 쓰기
+   /var/www/html/index.html 파일 내용을 모니터에 출력하지 않고 /tmp/hacker 파일에 이어쓰기!
+   /usr/local/games 상대경로를 이용하여 이동 
+   /tmp디렉토리안에 monkey1 디렉토리생성
+   상위 디렉토리로 이동 ( 경로 이동 결과는 /usr/local )
+   /tmp/monkey1 디렉토리안에 monkey2 디렉토리생성
+   /tmp/monkey1/monkey2 디렉토리안에 monkey3 디렉토리생성
+   /tmp/hacker1/hacker2/hacker3 한번에 생성
+   /usr/ 상대경로를 이용하여 이동 
+   /root 디렉토리안에 korea 디렉토리 생성
+   /bin/bash 파일을 /root/korea 디렉토리안에 복사 한다 
+   /bin/su 파일과 /sbin/shutdown 파일을 tmp 디렉토리로 복사 단 (엔터키 입력은 한번만 이용)
+
+===============================================================
+head 명령어를 이용하여 /bin/ls 파일내용의 첫 3글자만!! 출력해보세요 출력 결과는 ELF
+tail 명령어를 이용하여 /etc/passwd 파일내용의 마지막 4글자만!! 출력해보세요 출력 결과는 bash
+================================================================

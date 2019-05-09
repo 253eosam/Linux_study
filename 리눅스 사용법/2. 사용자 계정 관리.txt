@@ -1,0 +1,122 @@
+﻿1. 사용자 계정 관리
+	/etc/passwd	: 사용자의 계정 정보
+	/etc/shadow	: 암호화된 사용자의 계정 정보	//user password는 여기에 저장
+	/etc/group	: 그룹 정보
+	/home		: 사용자 별 홈 디렉토리
+	/etc/skel	: 계정을 구성하는 뼈대 파일
+
+	</etc/passwd>
+	test	:	x	:	500	:	500	:	test	:	/home/test	:	/bin/bash
+	사용자	pwd 유무	UID(user)	GID(group)	주석		홈 디렉토리 경로	shell 위치
+		(보안상 x로 표기)
+				일반 사용자는 500부터 사용
+
+	</etc/shadow>
+	test:$6$sdQIOXY2pbSqif4l$Ihl/fokHscxz5.~~:17997:0:99999:7:::
+
+	[패스워드 특징]
+	$6$sdQIOXY2pbSqif4l$Ihl/fokHscxz5.~~
+
+		$hashid  $salt $hash value 
+		<1번째 $6>	1 : MD5
+				5 : SHA-256
+				6 : SHA-512
+		
+		<2번째 $salt>	: 랜덤으로 주어진다. 
+
+		<3번째 $>		: hash 값(암호화된 패스워드)
+
+	* salt와 passwd를 cript()함수를 이용하여 암호화 
+
+	</etc/group>
+	test  :  x  :  500  :
+
+	test	: 그룹 이름 
+	x	: 그룹 패스워드 (/etc/gshadow)
+	500	: GID 
+	:	: 해당 그룹에 소속된 사용자 (기본 그룹 제외)
+
+2. 사용자 추가
+	#> useradd [옵션] [유저명]
+	[옵션]
+	-u	: 사용자의 UID 지정
+	-g	: 사용자 기본 그룹 지정
+	-d	: 사용자의 기본 홈 디렉토리 변경
+	-c	: 주석
+	-s	: 사용할 쉘 지정
+	-D	: /etc/default/useradd 에 설정된 유저추가와 관련된 기본 사항들을 보여준다
+
+	</etc/default/useradd 파일>
+	GROUP=100		: 기본 그룹 GID
+	HOME=/home		: 사용자의 홈디렉토리가 생성될 디렉토리
+	INACTIVE=-1		: 비밀번호 만기 후 계정잠금 기간
+				 (-1 : 비활성화 , 0 : 만료기간이 되자마자)
+	EXPIRE			: 비밀번호 만기 일수
+	SHELL=/bin/bash		: 기본 쉘 지정
+	SKEL=/etc/skel		: 홈디렉토리에 복사할 파일을 가진 디렉토리(뼈대)
+	CREATE_MAIL_SPOO=yes	: 사용자 메일함 생성 여부 (/var/spool/mail/사용자명)
+
+	</etc/login.defs>	: userdadd가 새로운 계정을 생성할 때 반드시 참조하는 파일
+	MAIL_DIR    	/var/spool/mail	: 사용자 메일함 경로 지정
+	PASS_MAX_DAYS  	99999		: 패스워드 변경 최대일
+	PASS_MIN_DAYS  	0		: 패스워드 변경 최소일
+	PASS_MAX_LEN  	5		: 패스워드 최소 길이
+	PASS_WARN_AGE  	7		: 패스워드 변경 경고일
+	UID_MIN  	500		: 일반 사용자 UID(최소)
+	UID_MAX  	60000		: 일반 사용자 UID(최대)
+	GID_MIN  	500		: 일반 그룹 GID(최소)
+	GID_MAX  	60000		: 일반 그룹 GID(최대)
+	CREATE_HOME	yes		: 사용자 생성 시 홈디렉토리 생성 여부
+	UMASK		077		: 기본권한 설정
+	ENCRYPT_METHOD SHA512		: 패스워드 hash함수
+
+3. 사용자 정보 수정
+	#> usermod [옵션] [유저명]
+	[옵션]
+	-u	: 사용자 UID 변경
+	-g	: 사용자 GID 변경
+	-c	: 주석 달기
+	-d	: 홈 디렉토리 변경
+	-s	: 쉘 변경
+
+4. 사용자 삭제 
+	#> userdel [옵션] [유저명]
+	[옵션]
+	-r 	: 홈디렉토리와 메일함까지 삭제	// 반드시 사용할땐 이용하기 , 하지않았다면 따로 가서 지워야함.
+						// ( 메일함, shell , 홈디렉토리, UID, GID )
+	-f	: 강제삭제
+
+5. 패스워드 설정 정보 변경 (초기패스워드는 관리자가 지정)
+	#> passwd [옵션] [유저명]
+	[옵션]
+	-S	: 패스워드 정보 확인
+	-l	: 계정 잠금
+	-u	: 계정 잠금 해제
+	-d	: 패스워드 NULL 값으로 지정
+
+6. 그룹 추가
+	#> groupadd [옵션] [그룹명]
+	[옵션]
+	-g	: GID 지정
+
+7. 그룹 삭제
+	#> groupdel [그룹명]	// 그룹안에 멤버가 있다면 삭제가 불가능 
+
+8. 사용자 교체
+	#> su [옵션] [유저명]
+	[옵션]
+	-	: 사용자의 환경설정 적용	
+	
+문제)
+	1. korea 사용자 생성 
+	2. korea 사용자 비밀번호 test1234 변경
+	3. korea 사용자 삭제 
+	4. 그룹 koreais 생성 
+	5. 그룹 koreais에 korea생성 후 그룹에 포함(명령어 한 줄)
+	6. 생성된 사용자와 그룹 모두 삭제 
+
+
+
+
+
+

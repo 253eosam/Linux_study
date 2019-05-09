@@ -1,0 +1,64 @@
+﻿[데몬] - Daemon
+	> 시스템에 관련된 작업을 Background로 움직이는 프로그램 
+	> windows의 서비스 같은 것 
+	
+	1. standalone 
+		> 항상 준비 
+		> /etc/init.d
+		> 메모리 부하 
+		> 응답 속도는 빠르다. 
+
+	2. xinetd (자체는 standalone)
+		> 슈퍼데몬 
+		> 요청 시 준비 
+		> 응답 속도가 느리다. 
+		> 메모리 효율적으로 사용 
+		> /etc/xinetd.d
+	
+	[xinetd 설정파일]
+		/etc/xinetd.conf 
+
+	[xinetd 서비스 관련 디렉토리]
+		/etc/xinetd.d 
+
+	[xinetd 서비스 관련 파일]
+		/etc/xinetd.conf, /etc/xinetd.d, /etc/services, /etc/protocols, 
+		/etc/rc.d/init.d/xinetd, /etc/hosts.allow, /etc/hosts.deny,
+		/var/log/secure, /usr/sbin/xinetd, /usr/sbin/tcpd 
+
+	/etc/services :  리눅스에서 사용하는 모든 포트들에 대한 정의 설정 
+	/etc/protocols : /etc/services 파일에서 정의되는 프로토콜의 정의가 되어 있는 파일 
+
+	[xinetd의 시작과 종료]
+	#> /etc/rc.d/init.d/xinetd [start | restart | stop | status]
+	#> service xinetd [start | restart | stop | status]
+
+	[xinetd에 의한 접속 제어(tcp-wrapper)]
+		- 특정 IP나 도메인으로 서버로의 접속 차단 -> telnet, ftp, pop 등등..
+		- 로그 기록 
+		- 데몬 한정용 
+		- /etc/hosts.allow : 접속허용 설정 
+		- /etc/hosts.deny : 접속차단 설정 
+		// 블랙 리스트	: 모두 허용 후 몇 차단
+		// 화이트 리스트	: 모두 차단 후 몇 허용
+
+		[데몬명] : [IP, 도메인]
+		ALL : ALL 
+
+	[데몬의 종류]
+		HTTPD	: 홈페이지(웹)
+		TELNETD : 원격접속 (평문전송)
+		SSHD	: 원격접속 (암호문 전송)
+		SNMPD	: 네트워크 감시 
+		DHCPD	: IP, G/W, S/M, DNS 을 자동으로 설정해주는 데몬 프로그램 
+
+	
+
+
+
+
+
+
+
+
+

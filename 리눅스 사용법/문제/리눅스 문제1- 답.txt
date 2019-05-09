@@ -1,0 +1,137 @@
+
+1. 시작은 루트홈폴더에서 시작 :경로 /root
+
+   상대경로를 이용해서 tmp 디렉토리로 이동 
+
+   절대경로를 이용하여 etc안에 sysconfig 디렉토리로 이동
+
+   현재 있는 위치에서 상위디렉토리로 이동
+
+   상대경로를 이용하여 var 디렉토리안에 log 디렉토리로 이동
+
+   현재 위치는 ? 
+#pwd
+#cd ../tmp
+#cd /etc/sysconfig
+#pwd
+#cd ../
+#pwd
+cd ../var/log
+
+
+
+2. 루트 홈디렉토리로 이동 ( 아래의 문제는 상대 경로를 이용하여 하세요)
+#pwd
+#cd ../..
+#pwd
+#cd /root
+#pwd
+
+   /var/log/secure 라는 파일을 /tmp 폴더에 secure명으로 복사
+#cp ../var/log/secure /tmp
+
+   /etc/passwd 파일을 /root 폴더에 passwd_bak 이라는 파일명으로 복사
+#cp ../etc/passwd /root/passwd_bak
+
+   /etc/sysconfig/iptables 파일을 /home/iptables_bak 변경 복사
+#pwd
+#cp ../etc/sysconfig/iptables /home/iptables_bak
+
+3.루트 홈디렉토리로 이동 ( 아래의 문제는 상대 경로를 이용하여 하세요)
+   /etc/rc.d/init.d 상대경로를 이용하여 이동 
+#cd ../etc/rc.d/init.d
+
+   /etc/securetty 파일을 /var/www/html/ 디렉토리로 이동
+#mv ../../../etc/securetty /var/www/html
+
+   /etc/rc.d 상대경로를 이용하여 이동 
+#cd ../../../etc/rc.d
+
+   /etc/services 파일을 /var/www/html/ 디렉토리로 이동
+#cp ../../etc/services /var/www/html
+
+   /etc/passwd 파일을 모니터에 출력
+#cat ../passwd
+
+   /usr/share/zoneinfo/US 상대경로를 이용하여 이동 
+#cd ../../../../usr/share/zoneinfo/US
+
+   /var/log/secure 파일을 모니터에 출력
+#cat ../../../../var/log/secure
+
+   /usr/share/games 상대경로를 이용하여 이동 
+#cd ../../../../usr/share/games
+
+   /etc/sysconfig/iptables 파일을 모니터에 출력 
+#cat ../../../etc/sysconfig/iptables
+
+   /tmp 디렉토리에 파일명이 monkey라는 파일을 만들고 파일내용에 hihi 을 입력
+#cd ../../../tmp;cat > monkey
+hihi
+
+   /root 디렉토리에 korea.txt 라는 파일을 만들고 파일 내용에 hello korea 을 입력
+#cd ../root/;cat > korea.txt
+hello korea
+
+   /var/www/html 디렉토리에 index.html 이라는 파일을 만들고 hacker 을 입력
+#cd ../var/www/html/;cat > index.html
+hacker
+
+   /tmp 디렉토리에 hacker 파일을 생성
+#cd ../../../tmp;cat > hacker
+
+   /usr/local/etc 상대경로를 이용하여 이동 
+#cd ../usr/local/etc
+
+   /etc/passwd 파일 내용을 모니터에 출력하지 않고 /tmp/hacker 파일에 쓰기
+#cat ../../../etc/passwd | cat > /tmp/hacker
+
+   /var/www/html/index.html 파일 내용을 모니터에 출력하지 않고 /tmp/hacker 파일에 이어쓰기!
+#cat ../../../varwww/html/index.html | cat >> /tmp/hacker
+
+   /usr/local/games 상대경로를 이용하여 이동 
+#pwd
+#cd ../../../usr/local/games
+
+   /tmp디렉토리안에 monkey1 디렉토리생성
+#mkdir ../../../tmp/monkey1
+
+   상위 디렉토리로 이동 ( 경로 이동 결과는 /usr/local )
+#pwd
+#cd ../
+#pwd
+
+   /tmp/monkey1 디렉토리안에 monkey2 디렉토리생성
+#mkdir ../../tmp/monkey1/monkey2
+
+   /tmp/monkey1/monkey2 디렉토리안에 monkey3 디렉토리생성
+#mkdir ../../tmp/monkey1/monkey2/monkey3
+
+   /tmp/hacker1/hacker2/hacker3 한번에 생성
+#mkdir -p /tmp/hacker1/hacker2/hacker3
+
+   /usr/ 상대경로를 이용하여 이동 
+#pwd
+#cd /usr
+
+   /root 디렉토리안에 korea 디렉토리 생성
+#pwd
+#mkdir ../root/korea
+
+   /bin/bash 파일을 /root/korea 디렉토리안에 복사 한다 
+#pwd
+#cp ../../bin/bash /root/korea
+
+   /bin/su 파일과 /sbin/shutdown 파일을 tmp 디렉토리로 복사 단 (엔터키 입력은 한번만 이용)
+#pwd
+#cp ../bin/su /tmp;cp ../sbin/shutdown /tmp
+#ls-al ../tmp
+
+
+===============================================================
+head 명령어를 이용하여 /bin/ls 파일내용의 첫 3글자만!! 출력해보세요 출력 결과는 ELF
+#head /bin/ls -c 4
+
+tail 명령어를 이용하여 /etc/passwd 파일내용의 마지막 4글자만!! 출력해보세요 출력 결과는 bash
+#tail /etc/passwd -c 5
+================================================================

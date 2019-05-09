@@ -1,0 +1,41 @@
+4. 현재 리눅스 시스템의 시간은 ? 
+   /etc/httpd/conf/httpd.conf 파일의 상위 10줄만 출력 ( 라인번호도 같이 출력)
+#head ../etc/httpd/conf/httpd.conf | cat -n
+
+   /etc/httpd/conf/magic 파일의 하위 10줄만 출력 ( 라인번호도 같이 출력)
+#tail ../etc/httpd/conf/magic | cat -n
+
+   ping 8.8.8.8 모니터에 출력되는 문자열을 /tmp/log 파일에 저장
+#ping 8.8.8.8 | cat > /tmp/log
+
+   /tmp/log파일에 저장되는 기록을 실시간으로 확인 (tail 명령어를 이용)
+#tail -f ../tmp/log
+
+   현재 위치에서 /bin 폴더내 파일목록을 출력
+#ls -al ../bin
+
+   현재 위치에서 /bin 폴더내 파일목록 /tmp/bin.txt 파일에 저장
+#ls -al ../bin | cat > ../tmp/bin.txt
+
+   /etc/httpd/conf/httpd.conf 파일을 출력하는데 한페이지보고싶다면?
+more ../etc/httpd/conf/httpd.conf
+
+   /etc/httpd/conf/httpd.conf 파일의 292번재 줄 내용만 출력 (292 라인번호도 같이 출력)
+#cat ../etc/httpd/conf/httpd.conf -n | grep 292
+
+5.일반사용자로 로그인 하여 아래의 내용을 수행하시오.  su - [일반계정]
+#su - 일반계정
+
+   su 라는 파일을 찾으세요
+$find / -name su -type f 2> abc
+
+   stdio.h 라는 파일을 찾으세요 결과는 2개 검색됨
+$find / -name stdio.h -type f 2> abc
+
+   hosts.allow 파일을 찾으세요  결과는 1개 검색됨
+$find / -name hosts.allow -type f 2> abc
+   sysl?? 파일을 찾으세요 결과는 1개 검색됨
+$find / -name sys1?? -type f 2> abc
+
+   /bin 디렉토리에 800000byte 보다 작고 700000byte 큰 파일을 찾으시오 결과는 1개만 검색됨.
+$find /bin -type f -size +700000c -size -800000c

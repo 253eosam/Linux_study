@@ -1,0 +1,20 @@
+4. /etc/httpd/conf/httpd.conf 파일의 상위 10줄만 출력 ( 라인번호도 같이 출력)
+   /etc/httpd/conf/magic 파일의 하위 10줄만 출력 ( 라인번호도 같이 출력)
+   ping 8.8.8.8 을 입력하고 모니터에 출력되는 문자열을 /tmp/log 파일에 저장
+   /tmp/log파일에 저장되는 기록을 실시간으로 확인 (tail 명령어를 이용)
+   현재 위치에서 /bin 폴더내 파일목록을 출력
+   현재 위치에서 /bin 폴더내 파일목록 /tmp/bin.txt 파일에 저장
+   /etc/httpd/conf/httpd.conf 파일을 출력하는데 한페이지보고싶다면?
+   /etc/httpd/conf/httpd.conf 파일의 292번재 줄 내용만 출력 (292 라인번호도 같이 출력)
+
+5.일반사용자로 로그인 하여 아래의 내용을 수행하시오.  su - [일반계정]
+   su 라는 파일을 찾으세요
+   stdio.h 라는 파일을 찾으세요 결과는 2개 검색됨
+   hosts.allow 파일을 찾으세요  결과는 1개 검색됨
+   sysl?? 파일을 찾으세요 결과는 1개 검색됨
+   /bin 디렉토리에 800000byte 보다 작고 700000byte 큰 파일을 찾으시오 결과는 1개만 검색됨.
+
+ mkdir을 이용하여 /tmp/korea 디렉터리를 만든 후 abc 파일을 만든다.
+ 한줄의 명령어를 사용하여 /root/korea 디렉터리 안에 abc파일의 이름을 qwe로 변경하여 복사한다.
+ 만들어진 korea 안의 qwe파일을 korea디렉터리와 하위 파일을  /tmp/korea2/qwe로 이동한다.
+ /root 디렉터리 안에 korea 디렉터리는 존재하지 않아야한다. 

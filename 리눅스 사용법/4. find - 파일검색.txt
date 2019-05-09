@@ -1,0 +1,47 @@
+﻿1. find
+	> 파일 검색
+	#> find [경로] [옵션] [인수]
+		[옵션]
+		-print	: 출력(절대경로 - default)
+		-ls	: 자세히 출력
+		-type <type>
+			d	디렉토리 파일
+			f	일반 파일
+			b ,c 	장치 파일
+			l	링크 파일
+		-exec <command>
+			{}	: 검색한 파일
+			\;	: END	
+		ex) find / -type d -exec ls -al {} \;
+	
+	-name <name>	: 이름으로 검색
+	ex) find / -name passwd -exec rm -rf {} \;
+
+	-size <size>	: 크기로 검색 
+		c	: byte 
+		K	: kbyte
+		M	: Mbyte
+	        +<size>	: 크기가 size보다 큰 파일을 검색
+	        -<size>	: 크기가 size보다 작은 파일을 검색 
+
+	-user <user_name> : 소유자로 검색 
+	-group <group_name> : 소유그룹으로 검색 
+
+	-perm <perm>	: 권한으로 검색 
+	           <perm>       : 권한이 perm인 파일 
+	           -<perm>     : 권한이 <perm>을 포함하고 있는 파일 검색 
+
+	-atime <num>	: 접근 시간으로 검색 
+		+n	: n일 or n일 이전 
+		-n	: 오늘부터 n일 전 사이 
+		n	: 정확히 n일 전 
+
+	-mtime <num>	: 수정된 시간으로 검색 
+
+	-ctime <num>	: 변경  된 시간으로 검색 (파일 권한 변경)
+
+문제) 파일의 이름이 passwd이고 크기가 1000byte이상인 파일 검색  
+문제) /etc/passwd 파일을 검색하여 /root/passwd 파일로 복사 (find를 이용)
+
+
+
