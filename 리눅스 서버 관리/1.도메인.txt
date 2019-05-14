@@ -155,7 +155,7 @@
 		> 메모리 관련 통계파일이 생성되는 절대경로와 파일이름을 지정
 	
 	allow-query	{ localhost; };
-		> 네임서버 쿼리ㅣ를 허용할 IP 또는 IP대열을 설정
+		> 네임서버 쿼리를 허용할 IP 또는 IP대열을 설정
 		> 외부와의 쿼리를 허용하려면 any 입력
 
 	recursion yes;
@@ -304,10 +304,71 @@
 	> NS 레코드 다음에 네임서버의 도메인(루트도메인 포함)을 입력한다.
 	> MX 레코드는 해당 도메인에 대한 메일서버를 지정하는 레코드, 일반적으로 메일서버를 여러개 사용할 때 MX 레코드
 	  다음에 우선 순위 번호를 지정하여 메일을 수신할 수 있다.
+
+	> A레코드는 해당 도메인의 실제 IP주소를 설정하는 레코드 
+	IN	A	100.100.100.100 
+		> test.com 도메인의 IP가 100.100.100.100이라고 정의하는 설정 
 	
------------------------------------------------------------------------------------------------
-	
-			
+	> 서브도메인을 설정하려면 가장 앞부분에 서브도메인명을 입력하고 A레코드로 IP번호를 지정 
+	ns	IN	A	100.100.100.100 (ns.test.com 설정)
+	www	IN	A	100.100.100.100 (www.test.com 설정)
+
+
+named-checkconf /etc/named.rfc1912.zones
+named-checkzone /var/named/xxxx.zone
+DNS 서버 구축 순서
+
+1. bind 설치
+2. /etc/named.conf의 접근 권한을 localhost에서 any로 수정 
+3. 정방향
+4. 역방향
+5. 각 수정 파일 chown root.named {}
+5. service named restart
+
+<< 정방향 zone 파일>>
+$TTL 3H
+@       IN SOA  ns.test.com. admin.test.com. (
+                                        0       ; serial
+                                        1D      ; refresh
+                                        1H      ; retry
+                                        1W      ; expire
+                                        3H )    ; minimum
+        IN      NS      www.test.com.
+        IN      MX 10   ms.test.com.
+        IN      A       100.100.100.100
+www     IN      A       100.100.100.100
+ms      IN      A       100.100.100.100
+ftp     IN      A       100.100.100.100
+
+
+<< 정방향 rfc 파일>> 	
+zone "test.com" IN {
+        type master;
+        file "test.zone";
+        allow-update { none; };
+};
+
+<< 역방향 zone 파일>>
+$TTL 3H
+@       IN SOA  ns.test.com. admin.test.com. (
+                                        0       ; serial
+                                        1D      ; refresh
+                                        1H      ; retry
+                                        1W      ; expire
+                                        3H )    ; minimum
+        IN      NS      www.test.com.
+        IN      PTR     test.com.
+111	IN      PTR     www.test.com.
+111     IN      PTR     ms.test.com.
+111     IN      PTR     ftp.test.com.
+
+<< 역방향 rfc 파일>>
+zone "100.100.100.in-addr.arpa" IN {
+        type master;
+        file "test.rev.zone";
+        allow-update { none; };
+};
+		
 
 
 

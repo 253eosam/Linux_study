@@ -1,0 +1,29 @@
+1. 현재 위치 출력 
+2. /root 디렉토리에 test.txt 파일 만들고 내용을 "hello~ koreaisacademy" 입력 후 저장 (cat)
+3. test.txt 파일의 심볼릭 링크를 추가 (stest.txt) 
+4. 심볼릭링크의 권한을 755로 변경
+5. 심볼릭링크의 하드링크를 추가 (hstest.txt)
+6. hstest.txt 에 "friday" 추가 입력(cat)
+7. hstest.txt의 내용 중 friday만 출력 하기 (cat)
+8. Num이라는 변수 생성 (변수에 10을 집어넣기)
+9. test.txt 파일에 변수를 이용하여 변수 값(10)을 추가로 입력
+10. 쉘 스크립트를 이용하여 사용자 계정 test1 ~ test10 까지 자동으로 만들어주는 스크립트 작성
+11. 만들어진 test1 ~ test10 계정의 패스워드 설정도 자동으로 실행해주는 스크립트 작성 
+12 만들어진 test1 ~ test10 계정의 UID 값을 801 ~ 810 까지 설정해주는 스크립트 작성 
+13. config로 끝나는 파일 검색한 후 검색결과는 /tmp/find 파일로 만들기
+14. 현재시간을 출력 후 5분뒤에 종료 시키는 스케줄링 작성
+15. 매 시간마다 시간을 출력하는 스케줄링 작성 
+16. ifconfig에서 출력되는 내용 중 ip주소, 브로드캐스트 주소, 넷마스크 주소 만 출력되게 만든다. 
+17. backdoor 프로그램만들기 (backdoor.c) 
+	#include <sdtio.h>
+	int main()
+	{
+		setuid(0);
+		setgid(0);
+		system("/bin/bash")
+	}
+18. gcc 로 컴파일(backdoor : 파일명) 후 root의 권한으로 설정 
+19. 일반 사용자로 변경 후 backdoor 실행 후 결과 보기 
+20. 쉘 스크립트로 구구단 출력해보기 
+21. 단축명령어 설정 : 일회성 ls -ld  (ld)
+22. 일반 계정의 PATH 변수에 /tmp 등록 후 일반계정으로 /home/~ 에서 backdoor 파일 실행 

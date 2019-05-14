@@ -1,0 +1,109 @@
+﻿[방화벽]
+	- Firewall 
+		1) 호스트 방화벽	: 백신
+		2) 네트워트 방화벽 	: 보안서버 
+
+		> 기업이나 조직의 모든 정보가 컴퓨터에 저장되면서, 컴퓨터의 정보보안을 위해 
+	 	   외부에서 내부(해킹), 내부에서 외부(정보유출)의 정보통신망에 불법으로 접근하는 것을
+		   차단 하는 시스템 
+
+
+	[iptables]
+		> 리눅스의 방화벽으로 특정 호스트가 해당 호스트에 접근하는 것을 제어(허용/차단)
+		> 패킷 헤더를 분석하여 다양하게 제어 (허용/차단)
+		#> iptables [-t테이블] [액션] [체인] [매치] [-j타겟]
+
+	[테이블 - table]
+		- filter, nat, raw, mangle 
+		- 생략 가능
+		- 명시하지 않으면 기본적으로 filter가 적용
+
+	[체인 - Chain]
+		- iptables 패킷 필터링을 이용하기 위한 룰 (정책)
+		- 기본 Chain은 영구적이며 삭제 불가능 
+
+	1) INPUT
+		- 서버로 들어오는 기본 정책 
+		- 컴퓨터로 들어가는 모든 패킷은 INPUT chain을 통과 
+	
+	2) OUTPUT 
+		- 서버에서 나가는 기본 정책 
+		- 컴퓨터에서 나가는 모든 패킷은 OUTPUT chain을 통과 
+
+	3) FORWARD
+		- 서버를 지나가는 기본 정책 
+		- 호스트 컴퓨터가 목적지가 아닌 모든 패킷
+		- 컴퓨터를 지나가는 모든 패킷은 FORWARD chain을 통과 
+
+	- 방화벽에서 차단하려는 패킷 조건을 rule 형태로 지정하는데 각 chain 별로 rule들을 등록할 수 있다. 
+
+	[매치 -match]
+		> 패킷을 처리할 때 만족해야 하는 조건 
+
+		--source, --src		(-s)	: 출발지 IP주소 매칭 
+		--destination, --dst 	(-d)	: 목적지 IP주소 매칭
+		--protocol 		(-p)	: 프로토콜과 매칭(TCP, UDP, ICMP등등)
+							(대소문자 구분 x)
+		--in-interface		(-i)	: 입력 인터페이스(eth0, eth1, ...)
+		--out-interface		(-o)	: 출력 인터페이스(eth0, eth1,...)
+		--syn			(-y)	: SYN 패킷을 허용/차단 
+		--jump			(-j)	: 규칙에 맞는 패킷 허용/차단 
+		--match			(-m)	: 특정 모듈과의 매칭 
+		--table			(-t)	: 처리될 테이블 
+		--state				: 연결 상태와의 매칭
+		--dport				: 목적지 포트 번호
+		--sport				: 출발지 포트 번호 
+
+	[액션 - Action]
+		-A	(ADD)		: 한가지 정책을 생성 
+		-D	(DELETE)	: 기존 한가지 정책 삭제
+		-R	(REPLACE)	: 정책 교체 
+		-F	(FLUSH)		: 설정 되어 있는 모든 정책 삭제 
+		-P	(POLICY)	: 기본 정책 설정
+		-L	(LIST)		: 설정되어 있는 정책 목록 조회 
+
+	[타겟 - target]
+		> 패킷이 규칙과 일치할 때 취하는 동작을 지정 
+			ACCEPT	: 패킷을 허용
+			DROP	: 패킷을 허용하지 않음 
+			REJECT	: 패킷을 허용하지 않으며, 허용하지 않는 메시지를 보냄 
+			LOG	: 패킷을 syslog에 저장 
+
+	[정책 확인]
+		#> iptables -L 
+		#> iptables -nL			: src, dst, ip와 포트를 숫자로 표현 
+		#> iptables -nL --line-numbers 	: 라인번호, 리스트형태 출력, 규칙제거시 유용 
+
+	</etc/sysconfig/iptables> - 정책파일
+
+	[규칙 추가]
+	#>iptables -A INPUT -p icmp -j DROP
+		> icmp로 들어오는 패킷을 차단(ping)
+
+	#>iptables -A INPUT -s 192.168.0.0/24 -j ACCEPT 
+		> 지정한 IP대역에 대해 모든 패킷 허용 
+
+	#>iptables -A INPUT -s 192.168.0.0/255.255.255.0 -j ACCEPT 
+
+	#>iptables -A INPUT -p tcp --dport 80 -m recent --update --seconds 1 --hitcount 10 
+	  --name HTTP -j DROP 
+		> 1초동안 80번 포트에 똑같은 IP가 10번이상의 SYN이 들어오면 거부 
+	
+	[규칙 저장]
+	#> service iptables save 
+
+	[규칙 제거]
+	#> iptables -D [체인명] [필터링 번호]
+	#> iptables -D INPUT -p icmp -j DROP 
+	#> iptables -F 
+
+	[주의사항]
+	> 모든 정책은 순차적 실행 
+	> 순서가 중요 (우선순위가 먼저 등록한 순서)
+	> 정책을 입력할 경우 바로 적용 되기 때문에 원격에서 작업할 경우 주의가 필요하다. 
+
+문제1) 소스 IP가 192.168.0.200인 ip의 모든 접속을 막는다. 
+문제2) 서버에서 외부로는 ping테스트가 되고 외부에서 서버쪽으로는 ping테스트가 되지 않도록 규칙 추가 
+
+
+

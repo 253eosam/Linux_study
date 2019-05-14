@@ -33,12 +33,12 @@
 	#> /etc/rc.d/init.d/xinetd [start | restart | stop | status]
 	#> service xinetd [start | restart | stop | status]
 
-	[xinetd에 의한 접속 제어(tcp-wrapper)]
+	[xinetd에 의한 접속 제어(tcp-warpper)]
 		- 특정 IP나 도메인으로 서버로의 접속 차단 -> telnet, ftp, pop 등등..
 		- 로그 기록 
 		- 데몬 한정용 
 		- /etc/hosts.allow : 접속허용 설정 
-		- /etc/hosts.deny : 접속차단 설정 
+		- /etc/hosts.deny : 접속차단 설정 	//우선순위
 		// 블랙 리스트	: 모두 허용 후 몇 차단
 		// 화이트 리스트	: 모두 차단 후 몇 허용
 
